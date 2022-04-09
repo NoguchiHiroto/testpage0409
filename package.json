@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "html-webpack-plugin": "^5.5.0",
+    "inbox": "^1.1.59",
+    "webpack": "^5.70.0",
+    "webpack-node-externals": "^3.0.0",
+    "wordpress-shortcode-webpack-plugin": "^0.0.17"
+  }
+}
