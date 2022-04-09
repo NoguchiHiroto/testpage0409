@@ -1,0 +1,11 @@
+.tableHTML {
+  // background-clip: padding-box;
+  margin: 2%;
+  border-collapse: collapse;
+  td {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    &.table-value{
+      padding-left: 1%;
+    }
+  }
+}

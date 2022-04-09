@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Input.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Input.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+
+import FormGroup from '@mui/material/FormGroup';
+import FormControllLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import { useSelector, useDispatch } from 'react-redux';
+
+
+import TextField from './TextField.jsx';
+import { changeStateAction } from './actions/actions.js';
+
+
+import './css/Input.css';
+// 絞り込み条件から案件を絞りこむ
+
+// const searchPlans = (props, selectedIndex, reward_min, reward_max, languages, dispatch) => {
+//   const langList = languages.map(lang => lang.language);
+//   if (isNaN(reward_min) || (isNaN(reward_max) &amp;&amp; reward_max !== Infinity)) {
+//     // window.alert('数値以外が入力されています。入力し直してください');
+//     console.log('数値以外が入力されています。入力し直してください');
+//   } else {
+//     if(reward_min === '') reward_min = 0; 
+//     if(reward_max === '') reward_max = Infinity; 
+//     const plansArray = [];
+//     // その案件のrewardが条件に合っているかを判定してbool型で返す関数
+//     const isRewardOk = data => parseInt(reward_min) &lt;= data.reward &amp;&amp; data.reward &lt;= (reward_max === Infinity ? Infinity : parseInt(reward_max));
+//     // "全て"が選択されている場合
+//     if (selectedIndex.includes(0)  || selectedIndex.includes(-1)) {
+//       props.data.forEach((data) => {
+//         if (isRewardOk(data)) plansArray.push(data);
+//       })
+//       props.changeStateFuncs.resultTable(plansArray);
+//     }
+//     // "その他"が選択されている場合
+//     else if (selectedIndex.includes(langList.length - 1)) {
+//       props.data.forEach(data => {
+//         console.log(langList.includes(data.language));
+//         if(!(langList.includes(data.language)) &amp;&amp; isRewardOk(data)) {
+//           plansArray.push(data);
+//         }
+//       })
+//       props.changeStateFuncs.resultTable(plansArray);  
+//     }
+//     // 何かしらの言語名が選択されている場合
+//     else {
+//       props.data.forEach(data => {
+//         selectedIndex.forEach(index => {
+//           if ((langList[index] === data.language) &amp;&amp; isRewardOk(data)) {
+//             plansArray.push(data);
+//           }
+//         })
+//       });
+//       props.changeStateFuncs.resultTable(plansArray);
+//     }
+//   };
+// }
+
+/**
+ * @module searchPlans
+ * @param {array} resultTable - 現在絞り込まれた結果表示される予定の案件リスト
+ * @return {array} - 今回絞り込んだ結果表示する予定の案件リスト
+*/
+const searchPlans = (resultTable, selectedLanguages, plan, hooks) => {
+  const langlist = hooks.useSelector((state) => state.stateReducer.selectableLanguages);
+  if (plan.reward_min === '') reward_min = 0;
+  if (plan.reward_max === '') reward_min = Infinity;
+  const plansArray = [];
+  const isRewardOk = result => parseInt(reward_min) &lt;= result.reward &amp;&amp; result.reward &lt;= (reward_max === Infinity ? Infinity : parseInt(reward_max));
+  // 全てが選択されている場合
+  if (selectedLanguages.include('全て')) {
+    resultTable.forEach((ret) => {
+      if (isRewardOk(ret)) plansArray.push(ret);
+    })
+    hooks.dispatch(changeStateAction(plansArray));
+  }
+
+
+}
+
+const Input = (props) => {
+  const dispatch = useDispatch();
+  const labelText = props.labelText;
+  const languages = useSelector((state) => state.stateReducer.languages);
+  const selectedLanguages = useSelector((state) => state.stateReducer.selectedLanguages);
+
+  return (
+    &lt;label>{labelText}{useSelector(state => state.stateReducer.selectedLanguages)}
+      &lt;table>
+        &lt;tbody>
+          &lt;tr>
+            &lt;td className = 'dev-language'>開発言語&lt;/td>
+            &lt;td>
+              &lt;FormGroup>
+                &lt;div  className = 'CheckBox-Wrapper'>
+                  {languages.map((languageData,index) => &lt;FormControllLabel control = {&lt;Checkbox />} label = {languageData.language} key = {index} checked = {checkedLanguages[languageData.language]} onChange = {(event) => {
+                    const selectedIndex = [];
+                    const setBody = selectedLanguages.map((checkedLang => checkedLang));
+                    // 選択された言語のstateを更新
+                    setBody[index] = event.target.checked;
+                    setCheckedLanguages(setBody);
+                    setBody.forEach((lang, index) => {
+                      if (lang) selectedIndex.push(index);
+                    });
+
+
+                    dispatch(changeStateAction.selectedLanguage(selectedIndex.map(i => languages[i].language)));
+                    searchPlans(props, selectedIndex, props.plan.reward_min, props.plan.reward_max, languages);
+                  }}
+                  />)}
+                &lt;/div>
+              &lt;/FormGroup>
+            &lt;/td>
+          &lt;/tr>
+          &lt;tr>
+            &lt;td>報酬額&lt;/td>
+            &lt;td>
+              &lt;TextField changeStateFuncs = {props.changeStateFuncs} isMax = {false} search = {searchPlans} InputProps = {props} languages = {languages} checkedLanguages = {checkedLanguages}/>~
+              &lt;TextField changeStateFuncs = {props.changeStateFuncs} isMax = {true}  search = {searchPlans} InputProps = {props} languages = {languages}/>
+            &lt;/td>
+          &lt;/tr>
+        &lt;/tbody>
+      &lt;/table>
+    &lt;/label>
+  )
+}
+export default Input;
+export {searchPlans};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-searchPlans.html">searchPlans</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Sat Mar 12 2022 13:00:06 GMT+0900 (日本標準時)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

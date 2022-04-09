@@ -1,0 +1,14 @@
+.selectBox {
+  width: 100%;
+  height: 400px;
+}
+
+.CheckBox-Wrapper {
+  display: inline;
+}
+
+@media screen and (max-width: 479px) {
+  .CheckBox-Wrapper {
+    display: none;
+  }
+}/*# sourceMappingURL=Input.css.map */

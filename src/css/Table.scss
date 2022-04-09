@@ -1,0 +1,12 @@
+.MuiTable-root {
+  cursor: pointer;
+  display: none;
+  // opacity: 0.5;
+}
+
+@media screen and (max-width: 479px) {
+  .tableCell{
+    display: none;
+    color: red;
+  }
+}

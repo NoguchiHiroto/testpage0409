@@ -1,0 +1,17 @@
+.MuiTable-root {
+  cursor: pointer;
+  /* display: none; */
+}
+
+@media screen and (max-width: 479px) {
+  /* .tableCell {
+    display: none;
+    color: red;
+  } */
+  .css-y8ay40-MuiTableCell-root {
+    display: none;
+  }
+  .css-y8ay40-MuiTableCell-root{
+    display: none;
+  }
+}/*# sourceMappingURL=Table.css.map */

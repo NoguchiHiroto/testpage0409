@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Form2 = () => {
+const FormMobile = () => {
   return (
     <div>これはform2</div>
   )
 }
-export default Form2;
+export default FormMobile;

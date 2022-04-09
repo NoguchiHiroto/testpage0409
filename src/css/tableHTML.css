@@ -1,0 +1,10 @@
+.tableHTML {
+  margin: 2%;
+  border-collapse: collapse;
+}
+.tableHTML td {
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+.tableHTML td.table-value {
+  padding-left: 1%;
+}/*# sourceMappingURL=tableHTML.css.map */
